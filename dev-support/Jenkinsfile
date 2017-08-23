@@ -394,7 +394,7 @@ END
            echo ""
            echo "[INFO] There are ${currentBuild.changeSets.size()} change sets."
            def seenJiras = []
-           def jiraPattern = ~/HBASE-[0-9]+/
+           def jiraPattern = java.util.regex.Pattern.compile(/HBASE-[0-9]+/)
            for ( changelist in currentBuild.changeSets ) {
              if ( changelist.isEmptySet() ) {
                echo "[DEBUG] change set was empty, skipping JIRA comments."
