@@ -394,6 +394,7 @@ END
            echo ""
            echo "[INFO] There are ${currentBuild.changeSets.size()} change sets."
            def seenJiras = []
+           CharSequence pattern = /HBASE-[0-9]+/
            for ( changelist in currentBuild.changeSets ) {
              if ( changelist.isEmptySet() ) {
                echo "[DEBUG] change set was empty, skipping JIRA comments."
@@ -401,7 +402,7 @@ END
                echo "[DEBUG] there are changes in the change set. Attempting to post comments."
              }
              for ( change in changelist ) {
-               def msg = change.msg
+               CharSequence msg = change.msg
                echo "[DEBUG] msg is of class ${msg.class}"
                echo "change: ${change}"
                echo "     ${msg}"
@@ -409,7 +410,7 @@ END
                echo "     ${change.author}"
                echo ""
                // For now, only match the first occurrance of an HBase jira id, due to JENKINS-46358
-               currentIssue = org.codehaus.groovy.runtime.StringGroovyMethods.find((CharSequence)(msg), (CharSequence)(/HBASE-[0-9]+/))
+               currentIssue = org.codehaus.groovy.runtime.StringGroovyMethods.find(msg, pattern)
                if (currentIssue != null ) {
                  echo "[DEBUG] found jira key: ${currentIssue}"
                  if ( currentIssue in seenJiras ) {
