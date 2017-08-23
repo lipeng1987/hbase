@@ -409,7 +409,7 @@ END
                echo "     ${change.author}"
                echo ""
                // For now, only match the first occurrance of an HBase jira id, due to JENKINS-46358
-               currentIssue = org.codehaus.groovy.runtime.StringGroovyMethods.find(msg, /HBASE-[0-9]+/)
+               currentIssue = org.codehaus.groovy.runtime.StringGroovyMethods.find((CharSequence)(msg), (CharSequence)(/HBASE-[0-9]+/))
                if (currentIssue != null ) {
                  echo "[DEBUG] found jira key: ${currentIssue}"
                  if ( currentIssue in seenJiras ) {
