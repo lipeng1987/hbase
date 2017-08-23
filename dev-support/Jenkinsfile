@@ -395,7 +395,9 @@ END
            echo "[INFO] There are ${currentBuild.changeSets.size()} change sets."
            def seenJiras = []
            CharSequence pattern = /HBASE-[0-9]+/
-           def foobar = org.codehaus.groovy.runtime.StringGroovyMethods.&find
+           def foobar = { CharSequence foo, CharSequence bar ->
+             org.codehaus.groovy.runtime.StringGroovyMethods.find(foo,bar)
+           }
            for ( changelist in currentBuild.changeSets ) {
              if ( changelist.isEmptySet() ) {
                echo "[DEBUG] change set was empty, skipping JIRA comments."
